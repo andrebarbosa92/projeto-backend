@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  starter-api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: spring-boot/api
+    ports: 
+      - '8080:8080'
+    links:
+      - db
+  db:
+    image: mysql:8.0.33
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: Fu458921
+      MYSQL_DATABASE: api
+    volumes:
+      - ./docker/mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
