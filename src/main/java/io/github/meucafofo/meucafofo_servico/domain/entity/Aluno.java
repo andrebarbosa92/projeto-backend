@@ -1,51 +1,29 @@
 package io.github.meucafofo.meucafofo_servico.domain.entity;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.validation.constraints.Email;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "Aluno")
-@DiscriminatorValue("Aluno")
+@DiscriminatorValue("ALUNO")
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
 public class Aluno extends Usuario{
 	private static final long serialVersionUID = 1L;
 	
 	private String cpf;
 	
-	public Aluno() {
-	}
-
-	public Aluno(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cpf) {
-		super(id, nome, dataNasc, sexo, email, senha);
+	public Aluno(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, String email, String senha, boolean ativo, String cpf) {
+		super(id, nome, sobrenome, dataNasc, sexo, email, senha, ativo);
 		this.cpf = cpf;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(id);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Aluno other = (Aluno) obj;
-		return Objects.equals(id, other.id);
 	}
 }
