@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -15,7 +14,6 @@ import lombok.Setter;
 @Entity(name="Locador")
 @DiscriminatorValue("LOCADOR")
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class Locador extends Usuario{
 	
 	/**
@@ -23,6 +21,10 @@ public class Locador extends Usuario{
 	 */
 	private static final long serialVersionUID = 3959533180189105610L;
 
+	public Locador() {
+		super();
+	}
+	
 	private String cgc;
 	
 	public Locador(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, String email, String senha, boolean ativo, String cgc) {
