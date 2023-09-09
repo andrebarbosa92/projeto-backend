@@ -32,7 +32,7 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_usuario")
 @Entity
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 
 	/**
 	 * 
@@ -44,30 +44,34 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario")
 	protected Long id;
-	
+
 	@Column(name = "nome")
 	private String nome;
-	
+
 	@Column(name = "sobrenome")
 	private String sobrenome;
-	
+
 	@Column(name = "data_nascimento")
 	private LocalDate dataNasc;
-	
+
 	@Column(name = "sexo")
 	private String sexo;
-	
+
 	@Email
 	@Column(name = "email", unique = true)
 	private String email;
 
+	@Column(name = "telefone")
+	private String telefone;
+
 	@Column(name = "senha")
 	private String senha;
-	
+
 	@Column(name = "ativo")
 	private Boolean ativo;
 
-	public Usuario(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, @Email String email, String senha, boolean ativo) {
+	public Usuario(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, @Email String email,
+			String telefone, String senha, boolean ativo) {
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -76,17 +80,18 @@ public class Usuario implements Serializable{
 		this.email = email;
 		this.senha = senha;
 		this.ativo = ativo;
+		this.telefone = telefone;
 	}
 
 	@JsonIgnore
-    @OneToMany(mappedBy = "acusador")
-    private List<Denuncia> denunciasAcusador = new ArrayList<>();
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "alvo")
-    private List<Denuncia> denunciasAlvo = new ArrayList<>();
-    
-    @JsonIgnore
+	@OneToMany(mappedBy = "acusador")
+	private List<Denuncia> denunciasAcusador = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "alvo")
+	private List<Denuncia> denunciasAlvo = new ArrayList<>();
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "locador")
- 	private List<Moradia> moradia;
+	private List<Moradia> moradia;
 }

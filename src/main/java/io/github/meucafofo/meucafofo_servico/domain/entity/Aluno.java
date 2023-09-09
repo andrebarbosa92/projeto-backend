@@ -23,8 +23,8 @@ public class Aluno extends Usuario{
 		super();
 	}
 	
-	public Aluno(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, String email, String senha, boolean ativo, String cpf) {
-		super(id, nome, sobrenome, dataNasc, sexo, email, senha, ativo);
+	public Aluno(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, String email, String senha, String telefone, boolean ativo, String cpf) {
+		super(id, nome, sobrenome, dataNasc, sexo, email, senha, telefone, ativo);
 		this.cpf = cpf;
 	}
 }

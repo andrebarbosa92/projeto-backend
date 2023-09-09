@@ -11,11 +11,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name="Locador")
+@Entity(name = "Locador")
 @DiscriminatorValue("LOCADOR")
 @EqualsAndHashCode(callSuper = true)
-public class Locador extends Usuario{
-	
+public class Locador extends Usuario {
+
 	/**
 	 * 
 	 */
@@ -24,11 +24,12 @@ public class Locador extends Usuario{
 	public Locador() {
 		super();
 	}
-	
+
 	private String cgc;
-	
-	public Locador(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, String email, String senha, boolean ativo, String cgc) {
-		super(id, nome, sobrenome, dataNasc, sexo, email, senha, ativo);
+
+	public Locador(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, String email,
+			String telefone, String senha, boolean ativo, String cgc) {
+		super(id, nome, sobrenome, dataNasc, sexo, email, telefone, senha, ativo);
 		this.cgc = cgc;
 	}
 }
