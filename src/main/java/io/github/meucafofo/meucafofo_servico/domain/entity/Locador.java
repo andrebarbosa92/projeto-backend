@@ -20,8 +20,12 @@ public class Locador extends Usuario{
 	 * 
 	 */
 	private static final long serialVersionUID = 3959533180189105610L;
-	
+
 	private String cgc;
+	
+	public Locador () {
+		super();
+	}
 	
 	public Locador(Long id, String nome, String sobrenome, LocalDate dataNasc, String sexo, String email, String senha, boolean ativo, String cgc) {
 		super(id, nome, sobrenome, dataNasc, sexo, email, senha, ativo);
