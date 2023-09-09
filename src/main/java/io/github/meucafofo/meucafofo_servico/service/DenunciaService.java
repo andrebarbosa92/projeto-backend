@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Denuncia;
-import io.github.meucafofo.meucafofo_servico.domain.repository.DenunciaRepository;
+import io.github.meucafofo.meucafofo_servico.repository.DenunciaRepository;
 
 @Service
 public class DenunciaService {

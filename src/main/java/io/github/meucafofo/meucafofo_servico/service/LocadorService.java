@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Locador;
-import io.github.meucafofo.meucafofo_servico.domain.repository.LocadorRepository;
+import io.github.meucafofo.meucafofo_servico.repository.LocadorRepository;
 
 @Service
 public class LocadorService {

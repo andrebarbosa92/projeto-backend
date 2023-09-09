@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Aluno;
-import io.github.meucafofo.meucafofo_servico.domain.repository.AlunoRepository;
+import io.github.meucafofo.meucafofo_servico.repository.AlunoRepository;
 
 @Service
 public class AlunoService {

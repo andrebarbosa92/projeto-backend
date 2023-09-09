@@ -1,6 +1,7 @@
 package io.github.meucafofo.meucafofo_servico.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Usuario;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ public class UsuarioDTO implements Serializable{
 	
 	private Long id;
 	private String nome;
-	private String dataNasc;
+	private LocalDate dataNasc;
 	private String sexo;
 	private String email;
 //	private String senha;

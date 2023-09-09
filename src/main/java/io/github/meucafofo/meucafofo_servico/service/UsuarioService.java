@@ -7,11 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Usuario;
-import io.github.meucafofo.meucafofo_servico.domain.repository.UsuarioRepository;
 import io.github.meucafofo.meucafofo_servico.dto.UsuarioDTO;
+import io.github.meucafofo.meucafofo_servico.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
@@ -32,6 +31,5 @@ public class UsuarioService {
 		UsuarioDTO dto = new UsuarioDTO(usuario);
 		
 		return dto;
-//		return opt.orElseThrow(() -> new ObjectNotFoundException("Aluno não encontrado. ID: "+ id));
 	}
 }

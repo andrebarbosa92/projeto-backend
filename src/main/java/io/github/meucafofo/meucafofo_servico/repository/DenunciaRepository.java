@@ -1,11 +1,9 @@
-package io.github.meucafofo.meucafofo_servico.domain.repository;
+package io.github.meucafofo.meucafofo_servico.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Denuncia;
 
-@Repository
 public interface DenunciaRepository extends JpaRepository<Denuncia, Long>{
 
 }

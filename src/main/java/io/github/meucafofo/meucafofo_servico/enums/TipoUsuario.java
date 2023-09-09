@@ -1,39 +1,27 @@
 package io.github.meucafofo.meucafofo_servico.enums;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TipoUsuario {
 
-	ALUNO(1, "Aluno"),
-	ADMINISTRADOR(2, "Administrador"),
-	LOCADOR(3, "Locador");
+	ALUNO(1, "ALUNO"),
+	ADMINISTRADOR(2, "ADMINISTRADOR"),
+	LOCADOR(3, "LOCADOR");
 	
 	private int codigo;
 	private String descricao;
 	
-	private TipoUsuario(int codigo, String descricao) {
-		this.codigo = codigo;
-		this.descricao = descricao;
-	}
-
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-	
-	public static TipoUsuario toEnum (Integer cod) {
-		
-		if(cod == null) {
-			return null;
-		}
-		
-		for (TipoUsuario x : TipoUsuario.values()) {
-			if(cod.equals(x.getCodigo())) {
-				return x;
+	public static TipoUsuario toEnum (int cod) {		
+		for (TipoUsuario tipoUsuario : TipoUsuario.values()) {
+			if(tipoUsuario.getCodigo() == cod) {
+				return tipoUsuario;
 			}
 		}
-		throw new IllegalArgumentException("Id inválido: "+cod);
+		throw new IllegalArgumentException("Id inválido: " + cod);
 	}
 	
 }

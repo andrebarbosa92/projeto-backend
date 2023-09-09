@@ -1,5 +1,11 @@
 package io.github.meucafofo.meucafofo_servico.enums;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TipoDenuncia {
 
 	ANUNCIOFALSO(1, "Anuncio Falso"),
@@ -8,11 +14,6 @@ public enum TipoDenuncia {
 	
 	private int codigo;
 	private String descricao;
-	
-	private TipoDenuncia(int codigo, String descricao) {
-		this.codigo = codigo;
-		this.descricao = descricao;
-	}
 
 	public int getCodigo() {
 		return codigo;
@@ -22,18 +23,12 @@ public enum TipoDenuncia {
 		return descricao;
 	}
 	
-	public static TipoDenuncia toEnum (Integer cod) {
-		
-		if(cod == null) {
-			return null;
-		}
-		
-		for (TipoDenuncia x : TipoDenuncia.values()) {
-			if(cod.equals(x.getCodigo())) {
-				return x;
+	public static TipoDenuncia toEnum (int cod) {
+		for (TipoDenuncia tipoDenuncia : TipoDenuncia.values()) {
+			if(cod == tipoDenuncia.getCodigo()) {
+				return tipoDenuncia;
 			}
 		}
 		throw new IllegalArgumentException("Id inválido: "+cod);
 	}
-	
 }

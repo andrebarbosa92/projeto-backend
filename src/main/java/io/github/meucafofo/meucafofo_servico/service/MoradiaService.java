@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Locador;
 import io.github.meucafofo.meucafofo_servico.domain.entity.Moradia;
-import io.github.meucafofo.meucafofo_servico.domain.repository.LocadorRepository;
-import io.github.meucafofo.meucafofo_servico.domain.repository.MoradiaRepository;
+import io.github.meucafofo.meucafofo_servico.repository.LocadorRepository;
+import io.github.meucafofo.meucafofo_servico.repository.MoradiaRepository;
 
 @Service
 public class MoradiaService {
