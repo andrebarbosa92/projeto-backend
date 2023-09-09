@@ -1,0 +1,23 @@
+# fly.toml app configuration file generated for meucafofo-servico on 2023-09-08T23:34:32-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "meucafofo-servico"
+primary_region = "gru"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[env]
+  DB_HOSTNAME = "meucafofo-servico-db.internal"
+  DB_PORT = "5432"
+  DB_NAME = "meucafofo_servico"
+  DB_USER = "postgres"
