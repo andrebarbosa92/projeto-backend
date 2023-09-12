@@ -6,13 +6,19 @@ RUN apt-get update \
 
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz \
   && tar -xf apache-maven-3.9.4-bin.tar.gz \
-  && cp -r apache-maven-3.9.4/ /opt/apache-maven-3.9.4
-
+  && rm -rf apache-maven-3.9.4-bin.tar.gz \ 
+  && mv apache-maven-3.9.4/ /opt/apache-maven-3.9.4 
+  
 ENV PATH="/opt/apache-maven-3.9.4/bin:${PATH}"
+
 WORKDIR /meucafofo
 RUN git clone https://github.com/meucafofo/projeto-backend.git
 WORKDIR /meucafofo/projeto-backend
 RUN echo $PATH \ 
   && mvn clean package -Dmaven.test.skip=true \
   && cp target/meucafofo-servico*.jar /meucafofo/app.jar
+
+# Limpar depedencias
+RUN rm -rf ~/.m2
+
 ENTRYPOINT ["java","-jar","/meucafofo/app.jar"]
