@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import io.github.meucafofo.meucafofo_servico.domain.entity.Usuario;
@@ -23,6 +24,9 @@ class UsuarioServiceTest {
 	@Autowired
 	private GenericModelMapper<CadastrarUsuarioDTO> mapper;
 
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	@Mock
 	private UsuarioRepository usuarioRepository;
 
@@ -32,7 +36,7 @@ class UsuarioServiceTest {
 
 	@BeforeEach
 	public void loadObjects() {
-		this.usuarioService = new UsuarioService(mapper, usuarioRepository);
+		this.usuarioService = new UsuarioService(mapper, usuarioRepository, encoder);
 		this.usuario = new Usuario(1L, "Moisés", "Caldas", LocalDate.of(2000, 7, 12), "M", "sesiom.br@gmail.com",
 				"(61) 88888-8888", "$2a$12$Smm433aUrFuDD7cf1.iO6.MAzZtXaONA6aNVe/sAr305eC3OtIRWK", false);
 	}

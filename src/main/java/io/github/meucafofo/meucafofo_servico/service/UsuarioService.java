@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,9 @@ public class UsuarioService {
 
 	private GenericModelMapper<CadastrarUsuarioDTO> mapper;
 	private UsuarioRepository usuarioRepository;
-
+	private PasswordEncoder encoder;
+	
+	
 	@Transactional(readOnly = true)
 	public List<UsuarioDTO> listarTodos() {
 		List<Usuario> listAluno = usuarioRepository.findAll();
@@ -43,7 +46,8 @@ public class UsuarioService {
 	@Transactional
 	public Usuario cadastrarUsuario(CadastrarUsuarioDTO dto) {
 		var tipoUsuario = TipoUsuario.toEnum(dto.getCodigoTipoUsuario());
-
+		dto.setSenha(encoder.encode(dto.getSenha()));
+		
 		switch (tipoUsuario) {
 		case LOCADOR:
 			return usuarioRepository.save(mapper.toEntity(dto, Locador.class));

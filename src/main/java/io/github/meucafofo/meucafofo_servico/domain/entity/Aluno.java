@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity(name = "Aluno")
-@DiscriminatorValue("ALUNO")
+@DiscriminatorValue("Aluno")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)

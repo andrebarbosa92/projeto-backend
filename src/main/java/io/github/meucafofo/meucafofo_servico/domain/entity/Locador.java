@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "Locador")
-@DiscriminatorValue("LOCADOR")
+@DiscriminatorValue("Locador")
 @EqualsAndHashCode(callSuper = true)
 public class Locador extends Usuario {
 
