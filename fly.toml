@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for meucafofo-servico on 2023-09-08T23:34:32-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "meucafofo-servico"
+primary_region = "gru"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[env]
+  DB_HOSTNAME = "ep-little-waterfall-09827631.us-east-2.aws.neon.tech"
+  DB_PORT = "5432"
+  DB_NAME = "meucafofo"
+  DB_USER = "moisescaldas"
+  INTROSPECTION_URI = "https://meucafofo-keycloack.fly.dev/realms/master/protocol/openid-connect/token"
+  CLIENT_ID = "meucafofo-frontend"
