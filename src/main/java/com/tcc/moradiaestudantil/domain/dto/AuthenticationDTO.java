@@ -2,19 +2,18 @@ package com.tcc.moradiaestudantil.domain.dto;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-public class LoginDTO implements Serializable{
+@Setter
+public class AuthenticationDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private String email;
 	private String senha;
-	
-	public LoginDTO(String email, String senha) {
-		this.email = email;
-		this.senha = senha;
-	}
 }

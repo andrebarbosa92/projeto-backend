@@ -2,6 +2,7 @@ package com.tcc.moradiaestudantil.domain.dto;
 
 import java.io.Serializable;
 
+
 import com.tcc.moradiaestudantil.domain.entity.Usuario;
 
 import lombok.AllArgsConstructor;
@@ -17,12 +18,13 @@ public class UsuarioDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
 	private String nome;
 	private String dataNasc;
 	private String sexo;
 	private String email;
-//	private String senha;
-//	private TipoUsuario tipo;
+	private String senha;
+	private String tipoUsuario;
 	
 	public UsuarioDTO(Usuario usuario) {
 		this.id = usuario.getId();
@@ -30,7 +32,7 @@ public class UsuarioDTO implements Serializable{
 		this.dataNasc = usuario.getDataNasc();
 		this.sexo = usuario.getSexo();
 		this.email = usuario.getEmail();
-//		this.senha = usuario.getSenha();
+		this.senha = usuario.getSenha();
 //		this.tipo = usuario.getTipoUsuario();
 	}
 }

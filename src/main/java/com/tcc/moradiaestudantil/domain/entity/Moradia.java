@@ -2,7 +2,6 @@ package com.tcc.moradiaestudantil.domain.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,12 +11,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity(name="Moradia")
+@EqualsAndHashCode(of = "id")
 public class Moradia implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -66,22 +67,5 @@ public class Moradia implements Serializable{
 		this.preco = preco;
 		this.tipoMoradia = tipoMoradia;
 		this.locador = locador;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Moradia other = (Moradia) obj;
-		return Objects.equals(id, other.id);
 	}
 }

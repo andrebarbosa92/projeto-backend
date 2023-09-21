@@ -1,4 +1,4 @@
-package com.tcc.moradiaestudantil.domain.controller;
+package com.tcc.moradiaestudantil.controller;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tcc.moradiaestudantil.domain.entity.Denuncia;
-import com.tcc.moradiaestudantil.domain.service.DenunciaService;
+import com.tcc.moradiaestudantil.service.DenunciaService;
 
 @RestController
 @RequestMapping("/api/denuncia")

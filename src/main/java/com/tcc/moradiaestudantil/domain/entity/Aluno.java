@@ -2,12 +2,15 @@ package com.tcc.moradiaestudantil.domain.entity;
 
 import java.util.Objects;
 
+import com.tcc.moradiaestudantil.domain.dto.AlunoDTO;
+import com.tcc.moradiaestudantil.enums.UserRole;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
 
 @Entity(name = "Aluno")
-@DiscriminatorValue("Aluno")
+@DiscriminatorValue("ALUNO")
 public class Aluno extends Usuario{
 	private static final long serialVersionUID = 1L;
 	
@@ -16,9 +19,14 @@ public class Aluno extends Usuario{
 	public Aluno() {
 	}
 
-	public Aluno(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cpf) {
-		super(id, nome, dataNasc, sexo, email, senha);
+	public Aluno(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cpf, UserRole role) {
+		super(id, nome, dataNasc, sexo, email, senha, role);
 		this.cpf = cpf;
+	}
+	
+	public Aluno(AlunoDTO dto) {
+		super(dto.getId(), dto.getNome(), dto.getDataNasc(), dto.getSexo(), dto.getEmail(), dto.getSenha(), dto.getRole());
+		this.cpf = dto.getCpf();
 	}
 
 	public String getCpf() {

@@ -1,11 +1,15 @@
 package com.tcc.moradiaestudantil.domain.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tcc.moradiaestudantil.enums.UserRole;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -17,14 +21,15 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_usuario")
 @Entity
-public class Usuario implements Serializable{
+@EqualsAndHashCode(of="id")
+public class Usuario implements UserDetails{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -48,13 +53,17 @@ public class Usuario implements Serializable{
 	@Column(name = "senha")
 	private String senha;
 	
-    public Usuario(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha) {
+	@Column(name = "role")
+	private UserRole role;
+	
+    public Usuario(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, UserRole role) {
 		this.id = id;
 		this.nome = nome;
 		this.dataNasc = dataNasc;
 		this.sexo = sexo;
 		this.email = email;
 		this.senha = senha;
+		this.role = role;
 	}
 
 	@JsonIgnore
@@ -116,21 +125,54 @@ public class Usuario implements Serializable{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	public UserRole getRole() {
+		return role;
+	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		return Objects.equals(id, other.id);
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLER_USER"));
+		else return List.of(new SimpleGrantedAuthority("ROLER_USER"));
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

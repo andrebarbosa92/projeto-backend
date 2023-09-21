@@ -2,6 +2,9 @@ package com.tcc.moradiaestudantil.domain.entity;
 
 import java.util.Objects;
 
+import com.tcc.moradiaestudantil.domain.dto.LocadorDTO;
+import com.tcc.moradiaestudantil.enums.UserRole;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
@@ -11,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name="Locador")
-@DiscriminatorValue("Locador")
+@DiscriminatorValue("LOCADOR")
 public class Locador extends Usuario{
 	private static final long serialVersionUID = 1L;
 	
@@ -20,10 +23,16 @@ public class Locador extends Usuario{
 	public Locador() {
 	}
 	
-	public Locador(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cgc) {
-		super(id, nome, dataNasc, sexo, email, senha);
+	public Locador(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cgc, UserRole role) {
+		super(id, nome, dataNasc, sexo, email, senha, role);
 		this.cgc = cgc;
 	}
+	
+	public Locador(LocadorDTO dto) {
+		super(dto.getId(), dto.getNome(), dto.getDataNasc(), dto.getSexo(), dto.getEmail(), dto.getSenha(), dto.getRole());
+		this.cgc = dto.getCgc();
+	} 
+	
 
 	@Override
 	public int hashCode() {

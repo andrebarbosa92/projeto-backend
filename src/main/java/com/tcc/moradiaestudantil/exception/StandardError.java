@@ -1,6 +1,7 @@
 package com.tcc.moradiaestudantil.exception;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,5 +17,6 @@ public class StandardError implements Serializable{
 	
 	private Integer status;
 	private String msg;
-	private Long timeStamp;
+	private Instant timeStamp;
+	private String path;
 }

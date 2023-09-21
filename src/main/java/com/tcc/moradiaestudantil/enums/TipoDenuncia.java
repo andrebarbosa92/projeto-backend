@@ -1,4 +1,4 @@
-package com.tcc.moradiaestudantil.domain.enums;
+package com.tcc.moradiaestudantil.enums;
 
 public enum TipoDenuncia {
 

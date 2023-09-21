@@ -1,4 +1,4 @@
-package com.tcc.moradiaestudantil.domain.utils;
+package com.tcc.moradiaestudantil.utils;
 
 import lombok.Getter;
 import lombok.Setter;
