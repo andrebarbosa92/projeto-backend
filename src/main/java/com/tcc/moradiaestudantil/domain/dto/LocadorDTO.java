@@ -25,6 +25,7 @@ public class LocadorDTO implements Serializable{
 	private String email;
 	private String senha;
 	private String cgc;
+	private String telefone;
 	private UserRole role;
 	
 	public LocadorDTO(Locador locador) {
@@ -35,6 +36,7 @@ public class LocadorDTO implements Serializable{
 		this.email = locador.getEmail();
 		this.senha = locador.getSenha();
 		this.cgc = locador.getCgc();
+		this.telefone = locador.getTelefone();
 		this.role = locador.getRole();
 	}
 }

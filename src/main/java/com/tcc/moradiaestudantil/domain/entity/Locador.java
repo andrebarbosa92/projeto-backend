@@ -23,13 +23,13 @@ public class Locador extends Usuario{
 	public Locador() {
 	}
 	
-	public Locador(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cgc, UserRole role) {
-		super(id, nome, dataNasc, sexo, email, senha, role);
+	public Locador(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cgc, String telefone, UserRole role) {
+		super(id, nome, dataNasc, sexo, email, senha, telefone, role);
 		this.cgc = cgc;
 	}
 	
 	public Locador(LocadorDTO dto) {
-		super(dto.getId(), dto.getNome(), dto.getDataNasc(), dto.getSexo(), dto.getEmail(), dto.getSenha(), dto.getRole());
+		super(dto.getId(), dto.getNome(), dto.getDataNasc(), dto.getSexo(), dto.getEmail(), dto.getSenha(), dto.getTelefone(), dto.getRole());
 		this.cgc = dto.getCgc();
 	} 
 	

@@ -53,16 +53,20 @@ public class Usuario implements UserDetails{
 	@Column(name = "senha")
 	private String senha;
 	
+	@Column(name = "telefone")
+	private String telefone;
+	
 	@Column(name = "role")
 	private UserRole role;
 	
-    public Usuario(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, UserRole role) {
+    public Usuario(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String telefone, UserRole role) {
 		this.id = id;
 		this.nome = nome;
 		this.dataNasc = dataNasc;
 		this.sexo = sexo;
 		this.email = email;
 		this.senha = senha;
+		this.telefone = telefone;
 		this.role = role;
 	}
 
@@ -125,6 +129,14 @@ public class Usuario implements UserDetails{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 	
 	public UserRole getRole() {
 		return role;
@@ -175,4 +187,5 @@ public class Usuario implements UserDetails{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }

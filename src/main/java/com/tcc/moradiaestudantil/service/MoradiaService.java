@@ -2,11 +2,13 @@ package com.tcc.moradiaestudantil.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tcc.moradiaestudantil.domain.dto.AnuncioDTO;
 import com.tcc.moradiaestudantil.domain.entity.Locador;
 import com.tcc.moradiaestudantil.domain.entity.Moradia;
 import com.tcc.moradiaestudantil.repository.LocadorRepository;
@@ -32,14 +34,13 @@ public class MoradiaService {
 	
 	@Transactional(readOnly = true)
 	public List<Moradia> listarMoradiaPorLocador(Long id){
-		
 		Optional<Locador> locador = locadorRepository.findById(id);
 		return moradiaRepository.findByLocador(locador.get());
 	}
 
-	public List<Moradia> findByTipoMoradiaAndPreco(String tipo, Double preco) {
-		// TODO Auto-generated method stub
-		return moradiaRepository.buscarTeste(tipo, preco);
+	public List<AnuncioDTO> findByTipoMoradiaAndPreco(String tipo, Double preco) {
+		List<Moradia> moradias = moradiaRepository.buscarTeste(tipo, preco);
+		return moradias.stream().map(u -> new AnuncioDTO(u)).collect(Collectors.toList());
 	}
 
 }

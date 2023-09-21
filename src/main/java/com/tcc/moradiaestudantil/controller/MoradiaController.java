@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tcc.moradiaestudantil.domain.dto.AnuncioDTO;
 import com.tcc.moradiaestudantil.domain.entity.Moradia;
 import com.tcc.moradiaestudantil.service.MoradiaService;
 
@@ -40,7 +41,7 @@ public class MoradiaController {
 	}
 	
 	@GetMapping("/filtro")
-	public ResponseEntity<List<Moradia>> findByTipoMoradiaAndPreco(
+	public ResponseEntity<List<AnuncioDTO>> findByTipoMoradiaAndPreco(
 			@RequestParam(name = "tipo") String tipo,
 			@RequestParam(name = "preco") Double preco){
 		return ResponseEntity.ok().body(moradiaService.findByTipoMoradiaAndPreco(tipo, preco));

@@ -19,13 +19,13 @@ public class Aluno extends Usuario{
 	public Aluno() {
 	}
 
-	public Aluno(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cpf, UserRole role) {
-		super(id, nome, dataNasc, sexo, email, senha, role);
+	public Aluno(Long id, String nome, String dataNasc, String sexo, @Email String email, String senha, String cpf, String telefone, UserRole role) {
+		super(id, nome, dataNasc, sexo, email, senha, telefone, role);
 		this.cpf = cpf;
 	}
 	
 	public Aluno(AlunoDTO dto) {
-		super(dto.getId(), dto.getNome(), dto.getDataNasc(), dto.getSexo(), dto.getEmail(), dto.getSenha(), dto.getRole());
+		super(dto.getId(), dto.getNome(), dto.getDataNasc(), dto.getSexo(), dto.getEmail(), dto.getSenha(), dto.getTelefone(), dto.getRole());
 		this.cpf = dto.getCpf();
 	}
 

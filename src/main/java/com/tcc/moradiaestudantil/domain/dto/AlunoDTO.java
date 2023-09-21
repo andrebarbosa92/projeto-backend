@@ -25,6 +25,7 @@ public class AlunoDTO implements Serializable{
 	private String email;
 	private String senha;
 	private String cpf;
+	private String telefone;
 	private UserRole role;
 	
 	public AlunoDTO(Aluno aluno) {
@@ -35,6 +36,7 @@ public class AlunoDTO implements Serializable{
 		this.email = aluno.getEmail();
 		this.senha = aluno.getSenha();
 		this.cpf = aluno.getCpf();
+		this.telefone = aluno.getTelefone();
 		this.role = aluno.getRole();
 	}
 }
