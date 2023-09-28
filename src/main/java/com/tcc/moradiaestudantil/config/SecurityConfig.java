@@ -34,7 +34,7 @@ public class SecurityConfig {
 //						.requestMatchers(HttpMethod.POST, "/api/aluno//inserir-aluno").hasRole("ADMIN")
 //						.requestMatchers(HttpMethod.POST, "/api/locador/atualizar").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.GET).permitAll()
-//						.requestMatchers(HttpMethod.POST).permitAll()
+						.requestMatchers(HttpMethod.POST).permitAll()
 						.requestMatchers(HttpMethod.PUT).permitAll()
 						.anyRequest().authenticated()
 				)
