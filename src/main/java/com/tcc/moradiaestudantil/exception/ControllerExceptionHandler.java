@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -35,5 +34,17 @@ public class ControllerExceptionHandler {
 		err.setPath(request.getRequestURI());
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorizationException(AuthorizationException e, HttpServletRequest request){
+		
+		StandardError err = new StandardError();
+		err.setTimeStamp(Instant.now());
+		err.setStatus(HttpStatus.FORBIDDEN.value());
+		err.setMsg(e.getMessage());
+		err.setPath(request.getRequestURI());
+		
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 	}
 }

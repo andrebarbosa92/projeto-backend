@@ -2,17 +2,24 @@ package com.tcc.moradiaestudantil.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tcc.moradiaestudantil.domain.dto.AnuncioDTO;
-import com.tcc.moradiaestudantil.domain.entity.Locador;
 import com.tcc.moradiaestudantil.domain.entity.Moradia;
-import com.tcc.moradiaestudantil.repository.LocadorRepository;
+import com.tcc.moradiaestudantil.domain.entity.Usuario;
+import com.tcc.moradiaestudantil.enums.TipoUsuario;
+import com.tcc.moradiaestudantil.exception.AuthorizationException;
+import com.tcc.moradiaestudantil.exception.ObjectNotFoundException;
+import com.tcc.moradiaestudantil.exception.RegisterException;
 import com.tcc.moradiaestudantil.repository.MoradiaRepository;
+import com.tcc.moradiaestudantil.repository.UsuarioRepository;
+import com.tcc.moradiaestudantil.utils.ServiceResponse;
 
 @Service
 public class MoradiaService {
@@ -21,10 +28,13 @@ public class MoradiaService {
 	private MoradiaRepository moradiaRepository;
 	
 	@Autowired
-	private LocadorRepository locadorRepository;
+	private UsuarioRepository usuarioRepository;
 	
-	public Moradia inserirMoradia(Moradia moradia) {
-		return moradiaRepository.saveAndFlush(moradia);
+	public ServiceResponse inserirMoradia(Moradia moradia) {
+		Optional<Usuario> locador = usuarioRepository.findById(moradia.getLocador().getId());
+		if(locador.get().getTipoUsuario() != TipoUsuario.toEnum(2)) throw new RegisterException("ID Locador inválido");
+		moradiaRepository.saveAndFlush(moradia);
+		return new ServiceResponse("Anuncio cadastrado com sucesso!", true);
 	}
 	
 	@Transactional(readOnly = true)
@@ -33,14 +43,31 @@ public class MoradiaService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Moradia> listarMoradiaPorLocador(Long id){
-		Optional<Locador> locador = locadorRepository.findById(id);
-		return moradiaRepository.findByLocador(locador.get());
+	public Page<AnuncioDTO> listarMoradiaPorLocador(Integer page, Integer linesPerPage, String orderBy, String direction){
+		Usuario user = UsuarioLogadoService.autheticated();
+		if(user == null ) {
+			throw new AuthorizationException("Acesso Negado!");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),  orderBy);
+		Optional<Usuario> locador = usuarioRepository.findById(user.getId());
+		if(locador.get().getTipoUsuario() != TipoUsuario.LOCADOR) throw new ObjectNotFoundException("Nenhum anuncio encontrado!.");
+		Page<Moradia> list = moradiaRepository.findByLocador(locador.get(), pageRequest);
+		Page<AnuncioDTO> dto = list.map(u -> new AnuncioDTO(u));
+		return dto;
 	}
 
-	public List<AnuncioDTO> findByTipoMoradiaAndPreco(String tipo, Double preco) {
-		List<Moradia> moradias = moradiaRepository.buscarTeste(tipo, preco);
-		return moradias.stream().map(u -> new AnuncioDTO(u)).collect(Collectors.toList());
+	public Page<AnuncioDTO> findByTipoMoradiaAndPreco(String tipo, Double preco, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),  orderBy);
+		Page<Moradia> moradias = moradiaRepository.buscarTeste(tipo, preco, pageRequest);
+		Page<AnuncioDTO> dto = moradias.map(u -> new AnuncioDTO(u));
+		return dto;
 	}
-
+	
+	
+	public Page<AnuncioDTO> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),  orderBy);
+		Page<Moradia> list = moradiaRepository.findAll(pageRequest);
+		Page<AnuncioDTO> dto = list.map(u -> new AnuncioDTO(u));
+		return dto;
+	}
 }

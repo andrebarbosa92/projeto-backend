@@ -58,7 +58,7 @@ public class Moradia implements Serializable{
     }
 
 	public Moradia(Integer id, String endereco, String bairro, String cep, String descricao, Double preco,
-			String tipoMoradia, Locador locador) {
+			String tipoMoradia, Usuario locador) {
 		this.id = id;
 		this.endereco = endereco;
 		this.bairro = bairro;

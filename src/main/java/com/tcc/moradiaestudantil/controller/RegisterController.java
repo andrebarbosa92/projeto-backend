@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.tcc.moradiaestudantil.domain.dto.AlunoDTO;
-import com.tcc.moradiaestudantil.service.AlunoService;
-import com.tcc.moradiaestudantil.service.LocadorService;
+import com.tcc.moradiaestudantil.domain.dto.UsuarioDTO;
+import com.tcc.moradiaestudantil.service.UsuarioService;
 import com.tcc.moradiaestudantil.utils.ServiceResponse;
 
 import jakarta.validation.Valid;
@@ -22,16 +21,20 @@ import jakarta.validation.Valid;
 public class RegisterController {
 
 	@Autowired
-	private AlunoService alunoService;
-	
-	@Autowired
-	private LocadorService locadorService;
+	private UsuarioService usuarioService;
 	
 	
 	@PostMapping("/aluno")
-	public ResponseEntity<ServiceResponse> insertAluno(@RequestBody @Valid AlunoDTO aluno){
-		ServiceResponse usuarioNovo = alunoService.insertAluno(aluno);
+	public ResponseEntity<ServiceResponse> insertAluno(@RequestBody @Valid UsuarioDTO aluno){
+		ServiceResponse usuarioNovo = usuarioService.insertUsuario(aluno);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(aluno.getId()).toUri();
+		return ResponseEntity.created(uri).body(usuarioNovo);
+	}
+	
+	@PostMapping("/locador")
+	public ResponseEntity<ServiceResponse> insertLocador(@RequestBody @Valid UsuarioDTO locador){
+		ServiceResponse usuarioNovo = usuarioService.insertUsuario(locador);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(locador.getId()).toUri();
 		return ResponseEntity.created(uri).body(usuarioNovo);
 	}
 }

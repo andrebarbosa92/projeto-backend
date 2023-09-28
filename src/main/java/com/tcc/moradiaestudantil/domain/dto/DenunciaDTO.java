@@ -3,6 +3,8 @@ package com.tcc.moradiaestudantil.domain.dto;
 import java.io.Serializable;
 
 import com.tcc.moradiaestudantil.domain.entity.Denuncia;
+import com.tcc.moradiaestudantil.enums.Status;
+import com.tcc.moradiaestudantil.enums.TipoDenuncia;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,13 +20,13 @@ public class DenunciaDTO implements Serializable{
 
 	private Long id;
 
-    private String motivo;
+    private TipoDenuncia motivo;
 
-    private String status;
+    private Status status;
 
 	public DenunciaDTO(Denuncia d) {
 		this.id = d.getId();
-		this.motivo = d.getMotivo();
+		this.motivo = d.getTipoDenuncia();
 		this.status = d.getStatus();
 	}
     

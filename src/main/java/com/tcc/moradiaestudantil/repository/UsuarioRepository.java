@@ -11,11 +11,10 @@ import com.tcc.moradiaestudantil.domain.entity.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
-	UserDetails findByEmail(String email);
 
 	Optional<Usuario> findOneByEmailAndSenha(String email, String encodePassword);
 	
-//	@Query("SELECT u.tipo_usuario FROM api.usuario u WHERE u.id = :id")
-//	public String findTipoUsuario(Long id);
+	Optional<Usuario> findByCpf(String cpf);
 
+	UserDetails findByEmail(String email);
 }

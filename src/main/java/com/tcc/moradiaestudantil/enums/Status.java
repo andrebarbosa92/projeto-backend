@@ -1,15 +1,15 @@
 package com.tcc.moradiaestudantil.enums;
 
-public enum TipoDenuncia {
+public enum Status {
 
-	FRAUDE(1, "Fraude"),
-	ASSEDIO(2, "Comportamento Desrespeitoso"),
-	SPAM(3, "Spam");
-	
+	PENDENTE(0, "pendente"),
+	APROVADO(1, "aprovado"),
+	REPROVADO(2, "reprovado");
+
 	private int codigo;
 	private String descricao;
 	
-	private TipoDenuncia(int codigo, String descricao) {
+	private Status(int codigo, String descricao) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 	}
@@ -22,18 +22,17 @@ public enum TipoDenuncia {
 		return descricao;
 	}
 	
-	public static TipoDenuncia toEnum (Integer cod) {
+	public static Status toEnum (Integer cod) {
 		
 		if(cod == null) {
 			return null;
 		}
 		
-		for (TipoDenuncia x : TipoDenuncia.values()) {
+		for (Status x : Status.values()) {
 			if(cod.equals(x.getCodigo())) {
 				return x;
 			}
 		}
 		throw new IllegalArgumentException("Id inválido: "+cod);
 	}
-	
 }
