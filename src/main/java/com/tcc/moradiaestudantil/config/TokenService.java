@@ -12,42 +12,43 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.tcc.moradiaestudantil.domain.entity.Usuario;
+import com.tcc.moradiaestudantil.dto.CredentialDTO;
+import com.tcc.moradiaestudantil.dto.UsuarioDTO;
+import com.tcc.moradiaestudantil.enums.TipoUsuario;
 
 @Service
 public class TokenService {
 
+	private static final ZoneOffset BRAZIL_ZONE_OFFSET = ZoneOffset.of("-03:00");
+	
 	@Value("${api.security.token.secret}")
 	private String secret;
 	
-	public String generateToken(Usuario user) {
+
+	public CredentialDTO generateToken(Usuario user) {
 		try {
+			var time = genExpirationDate();
 			Algorithm algorithm = Algorithm.HMAC256(secret);
-			String token = JWT.create()
-					.withIssuer("auth-api")
-					.withSubject(user.getEmail())
-					.withExpiresAt(genExpirationDate())
+			String token = JWT.create().withIssuer("auth-api").withSubject(user.getEmail()).withExpiresAt(time)
 					.sign(algorithm);
-			return token;
+			return new CredentialDTO(token, time.toEpochMilli(), UsuarioDTO.builder().id(user.getId()).nome(user.getNome())
+					.email(user.getEmail()).tipoUsuario(TipoUsuario.toEnum(user.getTipoUsuario())).build());
 		} catch (JWTCreationException e) {
 			throw new RuntimeException("Erro enquanto gera o token", e);
 		}
 	}
-	
+
 	public String validateToken(String token) {
-		
+
 		try {
 			Algorithm algorithm = Algorithm.HMAC256(secret);
-			return JWT.require(algorithm)
-					.withIssuer("auth-api")
-					.build()
-					.verify(token)
-					.getSubject();
+			return JWT.require(algorithm).withIssuer("auth-api").build().verify(token).getSubject();
 		} catch (JWTVerificationException e) {
 			return "";
 		}
 	}
-	
+
 	private Instant genExpirationDate() {
-		return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+		return LocalDateTime.now().plusMinutes(15).toInstant(BRAZIL_ZONE_OFFSET);
 	}
 }

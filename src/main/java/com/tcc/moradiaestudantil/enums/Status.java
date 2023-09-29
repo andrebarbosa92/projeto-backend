@@ -2,13 +2,11 @@ package com.tcc.moradiaestudantil.enums;
 
 public enum Status {
 
-	PENDENTE(0, "pendente"),
-	APROVADO(1, "aprovado"),
-	REPROVADO(2, "reprovado");
+	PENDENTE(0, "pendente"), APROVADO(1, "aprovado"), REPROVADO(2, "reprovado");
 
-	private int codigo;
+	private Integer codigo;
 	private String descricao;
-	
+
 	private Status(int codigo, String descricao) {
 		this.codigo = codigo;
 		this.descricao = descricao;
@@ -21,18 +19,13 @@ public enum Status {
 	public String getDescricao() {
 		return descricao;
 	}
-	
-	public static Status toEnum (Integer cod) {
-		
-		if(cod == null) {
-			return null;
-		}
-		
+
+	public static Status toEnum(int cod) {
 		for (Status x : Status.values()) {
-			if(cod.equals(x.getCodigo())) {
+			if (cod == x.getCodigo()) {
 				return x;
 			}
 		}
-		throw new IllegalArgumentException("Id inválido: "+cod);
+		throw new IllegalArgumentException("Codigo invalido inválido: " + cod);
 	}
 }

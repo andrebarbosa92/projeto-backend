@@ -22,20 +22,14 @@ public class SecurityConfig {
 	SecurityFilter securityFilter;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
 		return httpSecurity
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-//						.requestMatchers(HttpMethod.POST, "/api/aluno/inserir").permitAll()
-//						.requestMatchers(HttpMethod.POST, "/api/locador/inserir").permitAll()
-//						.requestMatchers(HttpMethod.POST, "/api/aluno//inserir-aluno").hasRole("ADMIN")
-//						.requestMatchers(HttpMethod.POST, "/api/locador/atualizar").hasRole("ADMIN")
-						.requestMatchers(HttpMethod.GET).permitAll()
-						.requestMatchers(HttpMethod.POST).permitAll()
-						.requestMatchers(HttpMethod.PUT).permitAll()
+						.requestMatchers(HttpMethod.POST, "/api/usuarios/*").permitAll()
 						.anyRequest().authenticated()
 				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -43,12 +37,12 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 }

@@ -1,13 +1,16 @@
-package com.tcc.moradiaestudantil.domain.dto;
+package com.tcc.moradiaestudantil.dto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.tcc.moradiaestudantil.domain.entity.Usuario;
 import com.tcc.moradiaestudantil.enums.Status;
 import com.tcc.moradiaestudantil.enums.TipoUsuario;
 import com.tcc.moradiaestudantil.enums.UserRole;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,8 +19,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@JsonInclude(Include.NON_NULL)
+@Builder
 public class UsuarioDTO implements Serializable{
-	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4339610453976677074L;
 	
 	private Long id;
 	private String nome;
@@ -40,8 +49,8 @@ public class UsuarioDTO implements Serializable{
 		this.email = usuario.getEmail();
 		this.senha = usuario.getSenha();
 		this.telefone = usuario.getTelefone();
-		this.tipoUsuario = usuario.getTipoUsuario();
-		this.status = usuario.getStatus();
+		this.tipoUsuario = TipoUsuario.toEnum(usuario.getTipoUsuario());
+		this.status = Status.toEnum(usuario.getStatus());
 		this.role = usuario.getRole();
 	}
 }

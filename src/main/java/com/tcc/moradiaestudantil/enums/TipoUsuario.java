@@ -6,7 +6,7 @@ public enum TipoUsuario {
 	ALUNO(1, "Aluno"),
 	LOCADOR(2, "Locador");
 	
-	private int codigo;
+	private Integer codigo;
 	private String descricao;
 	
 	private TipoUsuario(int codigo, String descricao) {
@@ -22,18 +22,13 @@ public enum TipoUsuario {
 		return descricao;
 	}
 	
-	public static TipoUsuario toEnum (Integer cod) {
-		
-		if(cod == null) {
-			return null;
-		}
-		
+	public static TipoUsuario toEnum (int cod) {
 		for (TipoUsuario x : TipoUsuario.values()) {
-			if(cod.equals(x.getCodigo())) {
+			if(x.getCodigo() == cod) {
 				return x;
 			}
 		}
-		throw new IllegalArgumentException("Id inválido: "+cod);
+		throw new IllegalArgumentException("Codigo inválido: " + cod);
 	}
 	
 }
