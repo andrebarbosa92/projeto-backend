@@ -20,6 +20,8 @@ import com.tcc.moradiaestudantil.enums.TipoUsuario;
 public class TokenService {
 
 	private static final ZoneOffset BRAZIL_ZONE_OFFSET = ZoneOffset.of("-03:00");
+	private static final Integer TIMEOUT_IN_MINUTES = 15;
+
 	
 	@Value("${api.security.token.secret}")
 	private String secret;
@@ -31,7 +33,7 @@ public class TokenService {
 			Algorithm algorithm = Algorithm.HMAC256(secret);
 			String token = JWT.create().withIssuer("auth-api").withSubject(user.getEmail()).withExpiresAt(time)
 					.sign(algorithm);
-			return new CredentialDTO(token, time.toEpochMilli(), UsuarioDTO.builder().id(user.getId()).nome(user.getNome())
+			return new CredentialDTO(token, Long.valueOf(TIMEOUT_IN_MINUTES * 60), UsuarioDTO.builder().id(user.getId()).nome(user.getNome())
 					.email(user.getEmail()).tipoUsuario(TipoUsuario.toEnum(user.getTipoUsuario())).build());
 		} catch (JWTCreationException e) {
 			throw new RuntimeException("Erro enquanto gera o token", e);
@@ -49,6 +51,6 @@ public class TokenService {
 	}
 
 	private Instant genExpirationDate() {
-		return LocalDateTime.now().plusMinutes(15).toInstant(BRAZIL_ZONE_OFFSET);
+		return LocalDateTime.now().plusMinutes(TIMEOUT_IN_MINUTES).toInstant(BRAZIL_ZONE_OFFSET);
 	}
 }

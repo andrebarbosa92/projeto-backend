@@ -1,6 +1,10 @@
 package com.tcc.moradiaestudantil.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,7 +27,7 @@ public class SecurityConfig {
 	
 	@Autowired
 	SecurityFilter securityFilter;
-
+	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
@@ -29,11 +36,26 @@ public class SecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-						.requestMatchers(HttpMethod.POST, "/api/usuarios/*").permitAll()
+						.requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
 						.anyRequest().authenticated()
 				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+				.addFilter(corsFilter().getFilter())
 				.build();
+	}
+
+	@Bean
+	FilterRegistrationBean<CorsFilter> corsFilter() {
+		var source = new UrlBasedCorsConfigurationSource();
+		var config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.setAllowedOriginPatterns(List.of("*"));
+		config.setAllowedMethods(Arrays.asList("*"));
+		config.setAllowedHeaders(Arrays.asList("*"));
+		source.registerCorsConfiguration("/**", config);
+		var bean = new FilterRegistrationBean<CorsFilter>(new CorsFilter(source));
+		bean.setOrder(-1);
+		return bean;
 	}
 	
 	@Bean
