@@ -1,4 +1,4 @@
-package com.tcc.moradiaestudantil.domain.dto;
+package com.tcc.moradiaestudantil.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

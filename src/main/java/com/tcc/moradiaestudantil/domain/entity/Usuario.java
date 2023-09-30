@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tcc.moradiaestudantil.domain.dto.UsuarioDTO;
+import com.tcc.moradiaestudantil.dto.UsuarioDTO;
 import com.tcc.moradiaestudantil.enums.Status;
 import com.tcc.moradiaestudantil.enums.TipoUsuario;
 import com.tcc.moradiaestudantil.enums.UserRole;
@@ -21,12 +21,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Entity(name="usuario")
 @EqualsAndHashCode(of="id")
+@Getter
+@Setter
 public class Usuario implements UserDetails{
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +43,7 @@ public class Usuario implements UserDetails{
 	@Column(name = "nome")
 	private String nome;
 	
-	@Column(name = "cpf")
+	@Column(name = "cpf", unique = true)
 	private String cpf;
 	
 	@Column(name = "data_nascimento")
@@ -48,7 +53,8 @@ public class Usuario implements UserDetails{
 	private String sexo;
 	
 	@Email
-	@Column(name = "email")
+	@NotBlank
+	@Column(name = "email", unique = true)
 	private String email;
 
 	@Column(name = "senha")
@@ -104,94 +110,6 @@ public class Usuario implements UserDetails{
     @JsonIgnore
 	@OneToMany(mappedBy = "locador")
  	private List<Moradia> moradia;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	
-	public String getDataNasc() {
-		return dataNasc;
-	}
-
-	public void setDataNasc(String dataNasc) {
-		this.dataNasc = dataNasc;
-	}
-
-	public String getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public TipoUsuario getTipoUsuario() {
-		return TipoUsuario.toEnum(tipoUsuario);
-	}
-
-	public void setTipoUsuario(TipoUsuario tipo) {
-		this.tipoUsuario = tipo.getCodigo();
-	}
-	
-	public Status getStatus() {
-		return Status.toEnum(status);
-	}
-
-	public void setStatus(Status status) {
-		this.status = status.getCodigo();
-	}
-	
-	public UserRole getRole() {
-		return role;
-	}
-
-	public void setRole(UserRole role) {
-		this.role = role;
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

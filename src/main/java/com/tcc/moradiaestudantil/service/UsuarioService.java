@@ -9,8 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tcc.moradiaestudantil.domain.dto.UsuarioDTO;
 import com.tcc.moradiaestudantil.domain.entity.Usuario;
+import com.tcc.moradiaestudantil.dto.UsuarioDTO;
 import com.tcc.moradiaestudantil.enums.UserRole;
 import com.tcc.moradiaestudantil.exception.AuthorizationException;
 import com.tcc.moradiaestudantil.exception.ObjectNotFoundException;
@@ -50,13 +50,6 @@ public class UsuarioService {
 	
 	@Transactional
 	public ServiceResponse insertUsuario (UsuarioDTO usuarioDTO) {
-		
-		if(usuarioRepository.findByEmail(usuarioDTO.getEmail()) != null) throw new RegisterException("Email já cadastrado!"); 
-		
-		String cpf = validCpf(usuarioDTO.getCpf());
-		Optional<Usuario> cpfVerify = usuarioRepository.findByCpf(cpf);
-		if (cpfVerify.isPresent()) throw new RegisterException("CPF já cadastrado!");
-		
 		Usuario usuario = new Usuario();
 		usuario.setNome(usuarioDTO.getNome());
 		usuario.setCpf(usuarioDTO.getCpf());
@@ -65,8 +58,8 @@ public class UsuarioService {
 		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setSenha(this.passwordEncoder.encode(usuarioDTO.getSenha()));
 		usuario.setTelefone(usuarioDTO.getTelefone());
-		usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
-		usuario.setStatus(usuarioDTO.getStatus());
+		usuario.setTipoUsuario(usuarioDTO.getTipoUsuario().getCodigo());
+		usuario.setStatus(usuarioDTO.getStatus().getCodigo());
 		usuario.setRole(usuarioDTO.getRole());
 		
 		usuarioRepository.save(usuario);
